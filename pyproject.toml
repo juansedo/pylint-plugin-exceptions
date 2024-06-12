@@ -1,0 +1,83 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pylint-plugin-exceptions"
+dynamic = ["version"]
+authors = [
+  { name = "Juan S. Díaz", email = "juansediaz123@gmail.com" },
+]
+description = "Pylint plugin to check for exceptions in docstrings."
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Build Tools",
+  "Topic :: Software Development :: Quality Assurance",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = []
+
+[project.urls]
+Documentation = "https://github.com/juansedo/pylint-plugin-exceptions#readme"
+Issues = "https://github.com/juansedo/pylint-plugin-exceptions/issues"
+Source = "https://github.com/juansedo/pylint-plugin-exceptions"
+
+[tool.hatch.version]
+path = "src/pylint_plugin_exceptions/__about__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "coverage[toml]>=6.5",
+  "pytest",
+]
+[tool.hatch.envs.default.scripts]
+test = "pytest {args:tests}"
+test-cov = "coverage run -m pytest {args:tests}"
+cov-report = [
+  "- coverage combine",
+  "coverage report",
+]
+cov = [
+  "test-cov",
+  "cov-report",
+]
+
+[[tool.hatch.envs.all.matrix]]
+python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+[tool.hatch.envs.types]
+dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/pylint_plugin_exceptions tests}"
+
+[tool.coverage.run]
+source_pkgs = ["pylint_plugin_exceptions", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/pylint_plugin_exceptions/__about__.py",
+]
+
+[tool.coverage.paths]
+pylint_plugin_exceptions = ["src/pylint_plugin_exceptions", "*/pylint-plugin-exceptions/src/pylint_plugin_exceptions"]
+tests = ["tests", "*/pylint-plugin-exceptions/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
