@@ -8,7 +8,7 @@ dynamic = ["version"]
 authors = [
   { name = "Juan S. Díaz", email = "juansediaz123@gmail.com" },
 ]
-description = "Pylint plugin to check for exceptions in docstrings."
+description = "A pylint plugin to check for exceptions in docstrings."
 readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
